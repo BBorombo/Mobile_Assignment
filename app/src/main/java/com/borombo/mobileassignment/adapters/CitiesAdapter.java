@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.borombo.mobileassignment.CitiesManager;
 import com.borombo.mobileassignment.R;
+import com.borombo.mobileassignment.TodayForecastTask;
 import com.borombo.mobileassignment.activities.CityActivity;
 import com.borombo.mobileassignment.holders.CitiesViewHolder;
 import com.borombo.mobileassignment.model.City;
@@ -41,8 +42,8 @@ public class CitiesAdapter extends RecyclerView.Adapter<CitiesViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, CityActivity.class);
-                context.startActivity(intent);
+                TodayForecastTask todayForecastTask = new TodayForecastTask(context);
+                todayForecastTask.execute(String.valueOf(city.getLatitude()), String.valueOf(city.getLongitude()));
             }
         });
     }
