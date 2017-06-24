@@ -1,4 +1,4 @@
-package com.borombo.mobileassignment;
+package com.borombo.mobileassignment.tasks;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +7,7 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.borombo.mobileassignment.R;
 import com.borombo.mobileassignment.activities.CityActivity;
 import com.borombo.mobileassignment.model.Forecast;
 import com.google.gson.Gson;

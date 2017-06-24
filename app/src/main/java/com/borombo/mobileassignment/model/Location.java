@@ -4,7 +4,7 @@ package com.borombo.mobileassignment.model;
  * Created by Borombo on 24/06/2017.
  */
 
-public class City {
+public class Location {
 
     private String name;
     private Double latitude;

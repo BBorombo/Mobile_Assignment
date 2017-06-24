@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.borombo.mobileassignment.R;
-import com.borombo.mobileassignment.model.City;
+import com.borombo.mobileassignment.model.Location;
 
 /**
  * Created by Borombo on 24/06/2017.
@@ -25,10 +25,10 @@ public class CitiesViewHolder extends ViewHolder {
         longLabel = (TextView) itemView.findViewById(R.id.longLabel);
     }
 
-    public void updateUI(Context context, City city){
-        nameLabel.setText(city.getName());
-        longLabel.setText(context.getText(R.string.lon) + String.valueOf(city.getLongitude()));
-        latLabel.setText(context.getText(R.string.lat) + String.valueOf(city.getLatitude()));
+    public void updateUI(Context context, Location location){
+        nameLabel.setText(location.getName());
+        longLabel.setText(context.getText(R.string.lon) + String.valueOf(location.getLongitude()));
+        latLabel.setText(context.getText(R.string.lat) + String.valueOf(location.getLatitude()));
     }
 
 }

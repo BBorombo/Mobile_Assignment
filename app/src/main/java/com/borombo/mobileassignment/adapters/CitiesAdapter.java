@@ -1,18 +1,16 @@
 package com.borombo.mobileassignment.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.borombo.mobileassignment.CitiesManager;
+import com.borombo.mobileassignment.utils.LocationsManager;
 import com.borombo.mobileassignment.R;
-import com.borombo.mobileassignment.TodayForecastTask;
-import com.borombo.mobileassignment.activities.CityActivity;
+import com.borombo.mobileassignment.tasks.TodayForecastTask;
 import com.borombo.mobileassignment.holders.CitiesViewHolder;
-import com.borombo.mobileassignment.model.City;
+import com.borombo.mobileassignment.model.Location;
 
 /**
  * Created by Borombo on 24/06/2017.
@@ -34,16 +32,16 @@ public class CitiesAdapter extends RecyclerView.Adapter<CitiesViewHolder> {
 
     @Override
     public void onBindViewHolder(CitiesViewHolder holder, int position) {
-        final City city = CitiesManager.getInstance().getById(position);
+        final Location location = LocationsManager.getInstance().getById(position);
         final Context context = holder.itemView.getContext();
 
-        holder.updateUI(context,city);
+        holder.updateUI(context, location);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 TodayForecastTask todayForecastTask = new TodayForecastTask(context);
-                todayForecastTask.execute(String.valueOf(city.getLatitude()), String.valueOf(city.getLongitude()));
+                todayForecastTask.execute(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()));
             }
         });
     }
@@ -54,7 +52,7 @@ public class CitiesAdapter extends RecyclerView.Adapter<CitiesViewHolder> {
 
     @Override
     public int getItemCount() {
-        return CitiesManager.getInstance().getNumberOfCities(context);
+        return LocationsManager.getInstance().getNumberOfCities(context);
     }
 
 }

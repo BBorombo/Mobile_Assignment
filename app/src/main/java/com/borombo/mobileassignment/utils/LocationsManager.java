@@ -1,10 +1,10 @@
-package com.borombo.mobileassignment;
+package com.borombo.mobileassignment.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.borombo.mobileassignment.model.City;
+import com.borombo.mobileassignment.model.Location;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -16,21 +16,21 @@ import java.util.List;
  * Created by Borombo on 24/06/2017.
  */
 
-public class CitiesManager {
+public class LocationsManager {
 
-    private static final CitiesManager instance = new CitiesManager();
+    private static final LocationsManager instance = new LocationsManager();
 
     private static final String DATA_KEY = "Cities";
 
     private SharedPreferences preferences;
-    private ArrayList<City> cities = new ArrayList<>();
+    private ArrayList<Location> cities = new ArrayList<>();
     private Gson gson = new Gson();
 
-    public static CitiesManager getInstance() {
+    public static LocationsManager getInstance() {
         return instance;
     }
 
-    private CitiesManager() {
+    private LocationsManager() {
     }
 
     public int getNumberOfCities(Context context){
@@ -45,23 +45,23 @@ public class CitiesManager {
         preferences = PreferenceManager
                 .getDefaultSharedPreferences(context);
         String json = preferences.getString(DATA_KEY, "");
-        Type type = new TypeToken<List<City>>(){}.getType();
-        ArrayList<City> data = gson.fromJson(json, type);
+        Type type = new TypeToken<List<Location>>(){}.getType();
+        ArrayList<Location> data = gson.fromJson(json, type);
         if(data != null){
              cities = data;
          }
 
     }
 
-    public void add(City city){
-        cities.add(city);
+    public void add(Location location){
+        cities.add(location);
         SharedPreferences.Editor editor = preferences.edit();
         String json = gson.toJson(cities);
         editor.putString(DATA_KEY, json);
         editor.commit();
     }
 
-    public City getById(int id){
+    public Location getById(int id){
         return cities.get(id);
     }
 
