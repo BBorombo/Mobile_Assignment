@@ -1,4 +1,4 @@
-package com.borombo.mobileassignement;
+package com.borombo.mobileassignment;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

@@ -1,4 +1,4 @@
-package com.borombo.mobileassignement;
+package com.borombo.mobileassignment;
 
 import org.junit.Test;
 

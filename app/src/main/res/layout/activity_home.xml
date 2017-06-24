@@ -3,7 +3,8 @@
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <include layout="@layout/app_bar"/>
 
@@ -15,9 +16,26 @@
 
         <!-- CONTENT -->
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/citiesRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+
         <include layout="@layout/navigation_view"/>
 
     </android.support.v4.widget.DrawerLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="30dp"
+        android:layout_marginRight="30dp"
+        android:src="@android:drawable/ic_input_add"
+        app:layout_anchor="@id/drawer_layout"
+        app:layout_anchorGravity="bottom|right|end"/>
 
 </android.support.design.widget.CoordinatorLayout>
 
