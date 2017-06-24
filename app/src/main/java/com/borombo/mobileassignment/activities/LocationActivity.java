@@ -11,7 +11,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 
-public class CityActivity extends LateralMenuActivity {
+public class LocationActivity extends LateralMenuActivity {
 
     private AnimationDrawable anim;
     private Forecast forecast;

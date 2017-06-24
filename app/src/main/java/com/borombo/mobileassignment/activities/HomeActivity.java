@@ -1,25 +1,20 @@
 package com.borombo.mobileassignment.activities;
 
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.borombo.mobileassignment.adapters.CitiesAdapter;
+import com.borombo.mobileassignment.adapters.LocationsAdapter;
 import com.borombo.mobileassignment.R;
 
 public class HomeActivity extends LateralMenuActivity {
 
     private RecyclerView citiesRecyclerView;
-    private CitiesAdapter citiesAdapter;
+    private LocationsAdapter locationsAdapter;
     private FloatingActionButton addCityButton;
     private SwipeRefreshLayout refreshLayout;
 
@@ -35,7 +30,7 @@ public class HomeActivity extends LateralMenuActivity {
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                citiesAdapter.swap();
+                locationsAdapter.swap();
                 refreshLayout.setRefreshing(false);
             }
         });
@@ -54,9 +49,9 @@ public class HomeActivity extends LateralMenuActivity {
     private void setupReyclerView(){
         citiesRecyclerView = (RecyclerView) findViewById(R.id.citiesRecyclerView);
 
-        citiesAdapter = new CitiesAdapter(getApplicationContext());
+        locationsAdapter = new LocationsAdapter(getApplicationContext());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         citiesRecyclerView.setLayoutManager(linearLayoutManager);
-        citiesRecyclerView.setAdapter(citiesAdapter);
+        citiesRecyclerView.setAdapter(locationsAdapter);
     }
 }

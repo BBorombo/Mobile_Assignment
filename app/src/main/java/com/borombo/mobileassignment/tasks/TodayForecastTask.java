@@ -8,7 +8,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.borombo.mobileassignment.R;
-import com.borombo.mobileassignment.activities.CityActivity;
+import com.borombo.mobileassignment.activities.LocationActivity;
 import com.borombo.mobileassignment.model.Forecast;
 import com.google.gson.Gson;
 
@@ -113,7 +113,7 @@ public class TodayForecastTask extends AsyncTask<String, Void, JSONObject> {
         }
 
         if (forecast != null){
-            Intent intent = new Intent(context, CityActivity.class);
+            Intent intent = new Intent(context, LocationActivity.class);
             intent.putExtra(context.getString(R.string.forecastExtra), gson.toJson(forecast));
             context.startActivity(intent);
         }

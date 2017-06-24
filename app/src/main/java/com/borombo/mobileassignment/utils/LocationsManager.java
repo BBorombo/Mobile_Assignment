@@ -55,15 +55,23 @@ public class LocationsManager {
 
     public void add(Location location){
         cities.add(location);
+        save();
+    }
+
+    public void delete(Location location){
+        cities.remove(location);
+        save();
+    }
+    public Location getById(int id){
+        return cities.get(id);
+    }
+
+
+    private void save(){
         SharedPreferences.Editor editor = preferences.edit();
         String json = gson.toJson(cities);
         editor.putString(DATA_KEY, json);
         editor.commit();
     }
-
-    public Location getById(int id){
-        return cities.get(id);
-    }
-
 
 }
