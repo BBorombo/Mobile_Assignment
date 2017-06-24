@@ -1,9 +1,10 @@
-package com.borombo.mobileassignement;
+package com.borombo.mobileassignement.activities;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class HomeActivity extends AppCompatActivity {
+import com.borombo.mobileassignement.R;
+
+public class HomeActivity extends LateralMenuActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

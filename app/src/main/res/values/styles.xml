@@ -8,4 +8,15 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="navigationView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_gravity">start</item>
+    </style>
+
+    <style name="TextNavigationDrawerStyle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:typeface">monospace</item>
+    </style>
+
 </resources>
