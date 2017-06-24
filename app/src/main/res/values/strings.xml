@@ -9,4 +9,10 @@
 
     <string name="lat">Latitude : </string>
     <string name="lon">Longitude : </string>
+    
+    <string name="addCityTitle">Add City</string>
+    <string name="addCityText">Choose the name of the new position</string>
+
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
 </resources>

@@ -23,7 +23,8 @@ public class CitiesManager {
     private static final String DATA_KEY = "Cities";
 
     private SharedPreferences preferences;
-    private ArrayList<City> cities;
+    private ArrayList<City> cities = new ArrayList<>();
+    private Gson gson = new Gson();
 
     public static CitiesManager getInstance() {
         return instance;
@@ -44,9 +45,20 @@ public class CitiesManager {
         preferences = PreferenceManager
                 .getDefaultSharedPreferences(context);
         String json = preferences.getString(DATA_KEY, "");
-        Gson gson = new Gson();
         Type type = new TypeToken<List<City>>(){}.getType();
-        cities = gson.fromJson(json, type);
+        ArrayList<City> data = gson.fromJson(json, type);
+        if(data != null){
+             cities = data;
+         }
+
+    }
+
+    public void add(City city){
+        cities.add(city);
+        SharedPreferences.Editor editor = preferences.edit();
+        String json = gson.toJson(cities);
+        editor.putString(DATA_KEY, json);
+        editor.commit();
     }
 
     public City getById(int id){

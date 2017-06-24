@@ -1,9 +1,9 @@
-package com.borombo.mobileassignement.activities;
+package com.borombo.mobileassignment.activities;
 
 import android.os.Bundle;
 import android.webkit.WebView;
 
-import com.borombo.mobileassignement.R;
+import com.borombo.mobileassignment.R;
 
 public class HelpActivity extends LateralMenuActivity {
 
