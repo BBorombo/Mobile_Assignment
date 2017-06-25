@@ -39,18 +39,20 @@ public class LateralMenuActivity extends AppCompatActivity implements Navigation
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        Intent intent;
+        Intent intent = new Intent();
 
         switch (id){
             case R.id.home:
                 intent = new Intent(LateralMenuActivity.this, HomeActivity.class);
-                startActivity(intent);
+                break;
+            case R.id.settings:
+                intent = new Intent(LateralMenuActivity.this, MyPreferencesActivity.class);
                 break;
             case R.id.help:
                 intent = new Intent(LateralMenuActivity.this, HelpActivity.class);
-                startActivity(intent);
                 break;
         }
+        startActivity(intent);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

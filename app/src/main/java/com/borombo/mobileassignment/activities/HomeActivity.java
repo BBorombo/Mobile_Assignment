@@ -46,6 +46,12 @@ public class HomeActivity extends LateralMenuActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        locationsAdapter.swap();
+    }
+
     private void setupReyclerView(){
         citiesRecyclerView = (RecyclerView) findViewById(R.id.citiesRecyclerView);
 

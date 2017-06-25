@@ -15,6 +15,7 @@ package="com.borombo.mobileassignment">
     </activity>
     <activity android:name="com.borombo.mobileassignment.activities.HelpActivity" />
     <activity android:name="com.borombo.mobileassignment.activities.LocationActivity" />
+    <activity android:name="com.borombo.mobileassignment.activities.MyPreferencesActivity" />
     <activity
         android:noHistory="true"
         android:name="com.borombo.mobileassignment.activities.AddLocationActivity" />

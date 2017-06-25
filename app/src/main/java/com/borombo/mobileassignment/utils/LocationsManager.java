@@ -62,6 +62,11 @@ public class LocationsManager {
         cities.remove(location);
         save();
     }
+
+    public void deleteAll(){
+        cities.clear();
+        save();
+    }
     public Location getById(int id){
         return cities.get(id);
     }
