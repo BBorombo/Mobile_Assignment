@@ -6,4 +6,10 @@
         android:key="@string/reset"
         android:summary="Delete all the saved locations"/>
 
+    <CheckBoxPreference
+        android:title="Show Icon"
+        android:key="@string/showIcon"
+        android:summary="Download and show Icon for the forecast"
+        android:defaultValue="true"/>
+
 </PreferenceScreen>

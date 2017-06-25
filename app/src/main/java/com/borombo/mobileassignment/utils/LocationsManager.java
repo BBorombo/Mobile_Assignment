@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.borombo.mobileassignment.R;
 import com.borombo.mobileassignment.model.Location;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -31,6 +32,12 @@ public class LocationsManager {
     }
 
     private LocationsManager() {
+    }
+
+    public boolean showIcon(Context context){
+        preferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        return preferences.getBoolean(context.getString(R.string.showIcon), true);
     }
 
     public int getNumberOfCities(Context context){

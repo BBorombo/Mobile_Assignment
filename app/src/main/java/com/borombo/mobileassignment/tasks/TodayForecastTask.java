@@ -35,7 +35,8 @@ public class TodayForecastTask extends AsyncTask<String, Void, JSONObject> {
 
     private JSONObject jsonData;
     private Context context;
-    private DrawerLayout content;
+    private View content;
+    private String locationName;
     private Gson gson = new Gson();
 
     private Forecast forecast;
@@ -52,15 +53,18 @@ public class TodayForecastTask extends AsyncTask<String, Void, JSONObject> {
     private static final String TEMP_MIN = "temp_min";
     private static final String TEMP_MAX = "temp_max";
     private static final String HUMIDITY = "humidity";
+    private static final String RAIN = "rain";
+    private static final String THREE_H = "3h";
 
     private static final String START_URL = "http://api.openweathermap.org/data/2.5/weather";
     private static final String LAT_URL = "?lat=";
     private static final String LNG_URL = "&lon=";
     private static final String END_URL = "&appid=c6e381d8c7ff98f0fee43775817cf6ad&units=metric";
 
-    public TodayForecastTask(Context context, DrawerLayout content){
+    public TodayForecastTask(Context context, View content, String locationName){
         this.context = context;
         this.content = content;
+        this.locationName = locationName;
     }
 
     @Override
@@ -126,6 +130,13 @@ public class TodayForecastTask extends AsyncTask<String, Void, JSONObject> {
 
                 forecast.setHumidity(main.getDouble(HUMIDITY));
 
+                if (jsonObject.has(RAIN)){
+                    JSONObject rain = jsonObject.getJSONObject(RAIN);
+                    if (rain.has(THREE_H)){
+                        forecast.setRain(rain.getDouble(THREE_H));
+                    }
+                }
+
             }catch (JSONException e){
                 e.printStackTrace();
             }
@@ -133,13 +144,19 @@ public class TodayForecastTask extends AsyncTask<String, Void, JSONObject> {
             if (forecast != null){
                 Intent intent = new Intent(context, LocationActivity.class);
                 intent.putExtra(context.getString(R.string.forecastExtra), gson.toJson(forecast));
+                intent.putExtra(context.getString(R.string.locationNameExtra), locationName);
                 context.startActivity(intent);
             }
         }else{
 
             final Snackbar snackbar = Snackbar
                     .make(content, context.getText(R.string.noConnexion), Snackbar.LENGTH_LONG)
-                    .setAction("Ok", null);
+                    .setAction("Ok", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                        }
+                    });
             snackbar.show();
         }
 

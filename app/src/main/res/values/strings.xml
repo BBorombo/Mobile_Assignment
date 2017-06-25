@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">"Mobile Assignement "</string>
+    <string name="app_name">"Mobile Assignment "</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -23,11 +23,13 @@
     <string name="ok">Ok</string>
     <string name="cancel">Cancel</string>
 
-    <string name="noConnexion">No internet connexion. Try later.</string>
+    <string name="noConnexion">No internet connexion. Try again later.</string>
 
     <string name="reset">Reset all locations</string>
+    <string name="showIcon">Show icon</string>
 
     <string name="forecastExtra">FORECAST_EXTRA</string>
+    <string name="locationNameExtra">LOCATION_NAME_EXTRA</string>
     <string name="title_activity_add_location">Map</string>
 
     <string name="temp">%1$.2f°</string>
@@ -36,4 +38,7 @@
 
     <string name="windDegree">Degree: %1$.2f</string>
     <string name="windSpeed">Speed: %1$.2f</string>
+
+    <string name="humidity">Humidity: %1$.2f</string>
+    <string name="rain">Rain: %1$.4f</string>
 </resources>

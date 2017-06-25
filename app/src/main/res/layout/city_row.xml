@@ -2,9 +2,10 @@
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:backgroundTint="@color/semiTransparent"
     android:elevation="5dp"
+    app:cardCornerRadius="10dp"
     android:layout_marginTop="10dp"
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
@@ -22,6 +23,7 @@
             android:layout_marginLeft="24dp"
             android:layout_marginTop="8dp"
             android:textSize="30sp"
+            android:textColor="@color/white"
             android:text="TextView"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -36,14 +38,18 @@
         <ImageButton
             android:id="@+id/deleteButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@android:drawable/ic_menu_delete"
+            android:layout_height="0dp"
+            android:layout_marginBottom="12dp"
             android:layout_marginRight="24dp"
+            android:layout_marginTop="12dp"
+            android:backgroundTint="@color/transparent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/trash"
+            android:tint="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="8dp" />
+            app:layout_constraintVertical_bias="0.0" />
 
     </android.support.constraint.ConstraintLayout>
 

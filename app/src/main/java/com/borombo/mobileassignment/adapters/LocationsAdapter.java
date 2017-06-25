@@ -33,7 +33,7 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(LocationsViewHolder holder, int position) {
+    public void onBindViewHolder(final LocationsViewHolder holder, int position) {
         final Location location = LocationsManager.getInstance().getById(position);
         final Context context = holder.itemView.getContext();
         final DrawerLayout content = (DrawerLayout) holder.itemView.findViewById(R.id.drawer_layout);
@@ -42,7 +42,7 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsViewHolder> 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TodayForecastTask todayForecastTask = new TodayForecastTask(context, content);
+                TodayForecastTask todayForecastTask = new TodayForecastTask(context, holder.itemView, location.getName());
                 todayForecastTask.execute(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()));
             }
         });

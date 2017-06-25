@@ -11,12 +11,13 @@ public class Forecast {
     private String cityName;
     private String icon;
 
-    private Double temperature;
-    private Double max_temp;
-    private Double min_temp;
-    private Double humidity;
-    private Double wind_deg;
-    private Double wind_spedd;
+    private Double temperature = 0.0;
+    private Double max_temp = 0.0;
+    private Double min_temp = 0.0;
+    private Double humidity = 0.0;
+    private Double wind_deg = 0.0;
+    private Double wind_spedd = 0.0;
+    private Double rain = 0.0;
 
     public String getWeatherMain() {
         return weatherMain;
@@ -96,5 +97,13 @@ public class Forecast {
 
     public void setWind_spedd(Double wind_spedd) {
         this.wind_spedd = wind_spedd;
+    }
+
+    public Double getRain() {
+        return rain;
+    }
+
+    public void setRain(Double rain) {
+        this.rain = rain;
     }
 }
