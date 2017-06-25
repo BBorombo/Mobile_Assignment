@@ -6,8 +6,8 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 
+import com.borombo.mobileassignment.utils.DialogManager;
 import com.borombo.mobileassignment.utils.LocationsManager;
 import com.borombo.mobileassignment.R;
 import com.borombo.mobileassignment.model.Location;
@@ -42,36 +42,39 @@ public class AddLocationActivity extends FragmentActivity implements OnMapReadyC
     public void onMapLongClick(final LatLng latLng) {
         final Marker marker = map.addMarker(new MarkerOptions().position(latLng));
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(AddLocationActivity.this);
+        DialogInterface.OnClickListener negativeButton = new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                marker.remove();
+            }
+        };
 
-            final EditText input = new EditText(AddLocationActivity.this);
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.MATCH_PARENT);
-            input.setLayoutParams(lp);
+        final EditText input = new EditText(AddLocationActivity.this);
 
-            builder.setTitle(getString(R.string.addCityTitle))
-                    .setView(input)
-                    .setMessage(getString(R.string.addCityText))
-                    .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            marker.remove();
-                        }
-                    })
-                    .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Location location = new Location();
-                            location.setName(input.getText().toString());
-                            location.setLatitude(latLng.latitude);
-                            location.setLongitude(latLng.longitude);
-                            LocationsManager.getInstance().add(location);
+        DialogInterface.OnClickListener positiveButton = new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Location location = new Location();
+                location.setName(input.getText().toString());
+                location.setLatitude(latLng.latitude);
+                location.setLongitude(latLng.longitude);
+                LocationsManager.getInstance().add(location);
 
-                            Intent intent = new Intent(AddLocationActivity.this, HomeActivity.class);
-                            startActivity(intent);
-                        }
-                    })
-                    .show();
+                Intent intent = new Intent(AddLocationActivity.this, HomeActivity.class);
+                startActivity(intent);
+            }
+        };
+
+        AlertDialog.Builder builder = DialogManager.getInstance().getDialogWithInput(AddLocationActivity.this,
+                            getString(R.string.addCityTitle),
+                            getString(R.string.addCityText),
+                            input,
+                            getString(R.string.cancel),
+                            getString(R.string.ok),
+                            negativeButton,
+                            positiveButton
+        );
+
+        builder.show();
     }
 }

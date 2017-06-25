@@ -5,7 +5,6 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.borombo.mobileassignment.R;
 import com.borombo.mobileassignment.utils.LocationsManager;
