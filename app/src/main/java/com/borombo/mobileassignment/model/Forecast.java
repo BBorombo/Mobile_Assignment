@@ -6,12 +6,49 @@ package com.borombo.mobileassignment.model;
 
 public class Forecast {
 
+    private String weatherMain;
+    private String weatherDescription;
+    private String cityName;
+    private String icon;
+
     private Double temperature;
     private Double max_temp;
     private Double min_temp;
     private Double humidity;
     private Double wind_deg;
     private Double wind_spedd;
+
+    public String getWeatherMain() {
+        return weatherMain;
+    }
+
+    public void setWeatherMain(String weatherMain) {
+        this.weatherMain = weatherMain;
+    }
+
+    public String getWeatherDescription() {
+        return weatherDescription;
+    }
+
+    public void setWeatherDescription(String weatherDescription) {
+        this.weatherDescription = weatherDescription;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
 
     public Double getTemperature() {
         return temperature;

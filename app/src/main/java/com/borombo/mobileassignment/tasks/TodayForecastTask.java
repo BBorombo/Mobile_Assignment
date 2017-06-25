@@ -16,6 +16,7 @@ import com.borombo.mobileassignment.activities.LocationActivity;
 import com.borombo.mobileassignment.model.Forecast;
 import com.google.gson.Gson;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -42,7 +43,11 @@ public class TodayForecastTask extends AsyncTask<String, Void, JSONObject> {
     private static final String WIND = "wind";
     private static final String WIND_DEG = "deg";
     private static final String WIND_SPEED = "speed";
+    private static final String NAME = "name";
     private static final String MAIN = "main";
+    private static final String DESCRIPTION = "description";
+    private static final String ICON = "icon";
+    private static final String WEATHER = "weather";
     private static final String TEMP = "temp";
     private static final String TEMP_MIN = "temp_min";
     private static final String TEMP_MAX = "temp_max";
@@ -104,6 +109,13 @@ public class TodayForecastTask extends AsyncTask<String, Void, JSONObject> {
                 forecast = new Forecast();
                 JSONObject main = jsonObject.getJSONObject(MAIN);
                 JSONObject wind = jsonObject.getJSONObject(WIND);
+                JSONArray weatherArray = jsonObject.getJSONArray(WEATHER);
+                JSONObject weather = (JSONObject) weatherArray.get(0);
+
+                forecast.setCityName(jsonObject.getString(NAME));
+                forecast.setWeatherMain(weather.getString(MAIN));
+                forecast.setWeatherDescription(weather.getString(DESCRIPTION));
+                forecast.setIcon(weather.getString(ICON));
 
                 forecast.setTemperature(main.getDouble(TEMP));
                 forecast.setMax_temp(main.getDouble(TEMP_MAX));

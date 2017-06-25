@@ -29,4 +29,11 @@
 
     <string name="forecastExtra">FORECAST_EXTRA</string>
     <string name="title_activity_add_location">Map</string>
+
+    <string name="temp">%1$.2f°</string>
+    <string name="maxTemp">Max: %1$.2f°</string>
+    <string name="minTemp">Min: %1$.2f°</string>
+
+    <string name="windDegree">Degree: %1$.2f</string>
+    <string name="windSpeed">Speed: %1$.2f</string>
 </resources>
