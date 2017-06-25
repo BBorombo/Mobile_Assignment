@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.borombo.mobileassignment.tasks.FiveDaysForecastTask;
 import com.borombo.mobileassignment.utils.LocationsManager;
 import com.borombo.mobileassignment.R;
 import com.borombo.mobileassignment.tasks.TodayForecastTask;
@@ -39,8 +40,13 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsViewHolder> 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TodayForecastTask todayForecastTask = new TodayForecastTask(context, holder.itemView, location.getName());
-                todayForecastTask.execute(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()));
+                if (LocationsManager.getInstance().show5FDaysForecast(context)){
+                    FiveDaysForecastTask fiveDaysForecastTask = new FiveDaysForecastTask(context, holder.itemView, location.getName());
+                    fiveDaysForecastTask.execute(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()));
+                }else {
+                    TodayForecastTask todayForecastTask = new TodayForecastTask(context, holder.itemView, location.getName());
+                    todayForecastTask.execute(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()));
+                }
             }
         });
     }

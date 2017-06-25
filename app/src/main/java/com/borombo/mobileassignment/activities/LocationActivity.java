@@ -27,9 +27,12 @@ public class LocationActivity extends LateralMenuActivity {
 
     private AnimationDrawable anim;
     private Forecast forecast;
+    private ArrayList<Forecast> forecasts = new ArrayList<>();
     private String name;
     private Gson gson = new Gson();
     private Type type = new TypeToken<Forecast>(){}.getType();
+    private boolean fiveDaysForecast;
+    private boolean showIcon;
 
     private TextView date;
     private TextView weatherMain;
@@ -55,7 +58,17 @@ public class LocationActivity extends LateralMenuActivity {
         setContentView(R.layout.activity_location);
         setupActivity();
 
-        forecast = gson.fromJson(getIntent().getStringExtra(getString(R.string.forecastExtra)), type);
+        fiveDaysForecast = LocationsManager.getInstance().show5FDaysForecast(this);
+        showIcon = LocationsManager.getInstance().showIcon(this);
+
+        if (fiveDaysForecast){
+            forecasts = (ArrayList<Forecast>) getIntent().getSerializableExtra(getString(R.string.forecastsExtra));
+            forecast = forecasts.get(0);
+            forecasts.remove(0);
+        }else{
+            forecast = gson.fromJson(getIntent().getStringExtra(getString(R.string.forecastExtra)), type);
+        }
+
         name = getIntent().getStringExtra(getString(R.string.locationNameExtra));
 
         date = (TextView) findViewById(R.id.date);
@@ -75,7 +88,7 @@ public class LocationActivity extends LateralMenuActivity {
 
         forecastsRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
-        if (LocationsManager.getInstance().showIcon(this) && forecast.getIcon() != null){
+        if (showIcon && forecast.getIcon() != null){
             IconForecastTask iconForecastTask = new IconForecastTask(weatherIcon);
             iconForecastTask.execute(forecast.getIcon());
         }
@@ -103,7 +116,7 @@ public class LocationActivity extends LateralMenuActivity {
         anim.setEnterFadeDuration(6000);
         anim.setExitFadeDuration(2000);
 
-        if (LocationsManager.getInstance().show5FDaysForecast(this)){
+        if (fiveDaysForecast){
             setupReyclerView();
         }else {
             forecastsRecyclerView.setVisibility(View.GONE);
@@ -129,13 +142,7 @@ public class LocationActivity extends LateralMenuActivity {
     }
 
     private void setupReyclerView(){
-        ArrayList<String> list = new ArrayList<>();
-        list.add("Paris");
-        list.add("Lille");
-        list.add("Lyon");
-        list.add("Nantes");
-        list.add("Marseille");
-        forecastsAdapter = new ForecastsAdapter(list);
+        forecastsAdapter = new ForecastsAdapter(forecasts);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         forecastsRecyclerView.setLayoutManager(linearLayoutManager);
         forecastsRecyclerView.setAdapter(forecastsAdapter);

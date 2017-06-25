@@ -1,5 +1,6 @@
 package com.borombo.mobileassignment.adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.borombo.mobileassignment.R;
 import com.borombo.mobileassignment.holders.ForecastsViewHolder;
+import com.borombo.mobileassignment.model.Forecast;
 
 import java.util.ArrayList;
 
@@ -16,10 +18,10 @@ import java.util.ArrayList;
 
 public class ForecastsAdapter extends RecyclerView.Adapter<ForecastsViewHolder> {
 
-    private ArrayList<String> datas = new ArrayList<>();
+    private ArrayList<Forecast> forecasts = new ArrayList<>();
 
-    public ForecastsAdapter(ArrayList<String> list){
-        datas = list;
+    public ForecastsAdapter(ArrayList<Forecast> list){
+        forecasts = list;
     }
 
     @Override
@@ -30,12 +32,13 @@ public class ForecastsAdapter extends RecyclerView.Adapter<ForecastsViewHolder> 
 
     @Override
     public void onBindViewHolder(ForecastsViewHolder holder, int position) {
-        String name = datas.get(position);
-        holder.updateUI(name);
+        Forecast forecast = forecasts.get(position);
+        final Context context = holder.itemView.getContext();
+        holder.updateUI(context, forecast);
     }
 
     @Override
     public int getItemCount() {
-        return datas.size();
+        return forecasts.size();
     }
 }

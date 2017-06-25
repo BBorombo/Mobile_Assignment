@@ -1,10 +1,12 @@
 package com.borombo.mobileassignment.model;
 
+import java.io.Serializable;
+
 /**
  * Created by Borombo on 24/06/2017.
  */
 
-public class Forecast {
+public class Forecast implements Serializable{
 
     private String weatherMain;
     private String weatherDescription;

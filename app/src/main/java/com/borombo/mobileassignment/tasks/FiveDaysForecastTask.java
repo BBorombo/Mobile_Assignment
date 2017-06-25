@@ -5,16 +5,13 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.View;
 
 import com.borombo.mobileassignment.R;
 import com.borombo.mobileassignment.activities.LocationActivity;
 import com.borombo.mobileassignment.model.Forecast;
-import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,21 +23,22 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 /**
- * Created by Borombo on 24/06/2017.
+ * Created by Borombo on 25/06/2017.
  */
 
-public class TodayForecastTask extends AsyncTask<String, Void, JSONObject> implements TaskValues {
+public class FiveDaysForecastTask extends AsyncTask<String, Void, JSONObject> implements TaskValues{
 
     private JSONObject jsonData;
     private Context context;
     private View content;
     private String locationName;
 
-    private Forecast forecast;
+    private ArrayList<Forecast> forecasts = new ArrayList<>();
 
-    public TodayForecastTask(Context context, View content, String locationName){
+    public FiveDaysForecastTask(Context context, View content, String locationName) {
         this.context = context;
         this.content = content;
         this.locationName = locationName;
@@ -52,13 +50,12 @@ public class TodayForecastTask extends AsyncTask<String, Void, JSONObject> imple
         InputStream inputStream;
 
         StringBuilder builder = new StringBuilder();
-        builder.append(START_URL);
+        builder.append(START_URL_FORECAST);
         builder.append(LAT_URL);
         builder.append(params[0]);
         builder.append(LNG_URL);
         builder.append(params[1]);
         builder.append(END_URL);
-
 
         if (hasActiveInternetConnection()){
             try {
@@ -87,57 +84,78 @@ public class TodayForecastTask extends AsyncTask<String, Void, JSONObject> imple
     protected void onPostExecute(JSONObject jsonObject) {
         if (jsonObject != null){
             try{
-                forecast = new Forecast();
-                JSONObject main = jsonObject.getJSONObject(MAIN);
-                JSONObject wind = jsonObject.getJSONObject(WIND);
-                JSONArray weatherArray = jsonObject.getJSONArray(WEATHER);
-                JSONObject weather = (JSONObject) weatherArray.get(0);
+                JSONObject city = jsonObject.getJSONObject(CITY);
+                String name = city.getString(NAME);
 
-                forecast.setCityName(jsonObject.getString(NAME));
-                forecast.setWeatherMain(weather.getString(MAIN));
-                forecast.setWeatherDescription(weather.getString(DESCRIPTION));
-                forecast.setIcon(weather.getString(ICON));
+                JSONArray list = jsonObject.getJSONArray(LIST);
 
-                forecast.setTemperature(main.getDouble(TEMP));
-                forecast.setMax_temp(main.getDouble(TEMP_MAX));
-                forecast.setMin_temp(main.getDouble(TEMP_MIN));
+                JSONObject jsonForecast;
 
-                forecast.setWind_deg(wind.getDouble(WIND_DEG));
-                forecast.setWind_spedd(wind.getDouble(WIND_SPEED));
-
-                forecast.setHumidity(main.getDouble(HUMIDITY));
-
-                if (jsonObject.has(RAIN)){
-                    JSONObject rain = jsonObject.getJSONObject(RAIN);
-                    if (rain.has(THREE_H)){
-                        forecast.setRain(rain.getDouble(THREE_H));
+                Forecast forecast;
+                int position = 0;
+                String hour = null;
+                do {
+                    jsonForecast = (JSONObject) list.get(position);
+                    forecast = new Forecast();
+                    if (position == 0){
+                        hour = jsonForecast.getString(DT_TXT).split(" ")[1];
+                    }else{
+                        if (!jsonForecast.getString(DT_TXT).split(" ")[1].equals(hour)){
+                            position++;
+                            continue;
+                        }
                     }
-                }
+
+                    JSONObject main = jsonForecast.getJSONObject(MAIN);
+                    JSONObject wind = jsonForecast.getJSONObject(WIND);
+                    JSONArray weatherArray = jsonForecast.getJSONArray(WEATHER);
+                    JSONObject weather = (JSONObject) weatherArray.get(0);
+
+                    forecast.setCityName(name);
+                    forecast.setWeatherMain(weather.getString(MAIN));
+                    forecast.setWeatherDescription(weather.getString(DESCRIPTION));
+                    forecast.setIcon(weather.getString(ICON));
+
+                    forecast.setTemperature(main.getDouble(TEMP));
+                    forecast.setMax_temp(main.getDouble(TEMP_MAX));
+                    forecast.setMin_temp(main.getDouble(TEMP_MIN));
+
+                    forecast.setWind_deg(wind.getDouble(WIND_DEG));
+                    forecast.setWind_spedd(wind.getDouble(WIND_SPEED));
+
+                    forecast.setHumidity(main.getDouble(HUMIDITY));
+
+                    if (jsonForecast.has(RAIN)){
+                        JSONObject rain = jsonForecast.getJSONObject(RAIN);
+                        if (rain.has(THREE_H)){
+                            forecast.setRain(rain.getDouble(THREE_H));
+                        }
+                    }
+
+                    forecasts.add(forecast);
+                    position++;
+                }while (position < list.length());
+
 
             }catch (JSONException e){
                 e.printStackTrace();
             }
-
-            if (forecast != null){
+            Log.d("Size", String.valueOf(forecasts.size()));
+            if (forecasts.size() > 1){
                 Intent intent = new Intent(context, LocationActivity.class);
-                intent.putExtra(context.getString(R.string.forecastExtra), gson.toJson(forecast));
+                intent.putExtra(context.getString(R.string.forecastsExtra), forecasts);
                 intent.putExtra(context.getString(R.string.locationNameExtra), locationName);
                 context.startActivity(intent);
             }
         }else{
-
             final Snackbar snackbar = Snackbar
                     .make(content, context.getText(R.string.noConnexion), Snackbar.LENGTH_LONG)
                     .setAction("Ok", new View.OnClickListener() {
                         @Override
-                        public void onClick(View v) {
-
-                        }
+                        public void onClick(View v) {}
                     });
             snackbar.show();
         }
-
-
     }
 
     public boolean isNetworkAvailable(){

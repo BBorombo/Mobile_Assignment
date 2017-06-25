@@ -34,6 +34,7 @@
     <string name="showForecastID">show_forecast</string>
 
     <string name="forecastExtra">FORECAST_EXTRA</string>
+    <string name="forecastsExtra">FORECASTS_EXTRA</string>
     <string name="locationNameExtra">LOCATION_NAME_EXTRA</string>
     <string name="title_activity_add_location">Map</string>
 
