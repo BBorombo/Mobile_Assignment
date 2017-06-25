@@ -3,10 +3,15 @@ package com.borombo.mobileassignment.activities;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.borombo.mobileassignment.R;
+import com.borombo.mobileassignment.adapters.ForecastsAdapter;
+import com.borombo.mobileassignment.adapters.LocationsAdapter;
 import com.borombo.mobileassignment.model.Forecast;
 import com.borombo.mobileassignment.tasks.IconForecastTask;
 import com.borombo.mobileassignment.utils.LocationsManager;
@@ -15,6 +20,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class LocationActivity extends LateralMenuActivity {
@@ -40,6 +46,9 @@ public class LocationActivity extends LateralMenuActivity {
 
     private ImageView weatherIcon;
 
+    private RecyclerView forecastsRecyclerView;
+    private ForecastsAdapter forecastsAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +72,8 @@ public class LocationActivity extends LateralMenuActivity {
         locationName = (TextView) findViewById(R.id.locationName);
 
         weatherIcon = (ImageView) findViewById(R.id.weatherIcon);
+
+        forecastsRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
         if (LocationsManager.getInstance().showIcon(this) && forecast.getIcon() != null){
             IconForecastTask iconForecastTask = new IconForecastTask(weatherIcon);
@@ -91,6 +102,12 @@ public class LocationActivity extends LateralMenuActivity {
         anim = (AnimationDrawable) container.getBackground();
         anim.setEnterFadeDuration(6000);
         anim.setExitFadeDuration(2000);
+
+        if (LocationsManager.getInstance().show5FDaysForecast(this)){
+            setupReyclerView();
+        }else {
+            forecastsRecyclerView.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -98,6 +115,10 @@ public class LocationActivity extends LateralMenuActivity {
         super.onResume();
         if (anim != null && !anim.isRunning())
             anim.start();
+        if (LocationsManager.getInstance().showIcon(this) && weatherIcon.getDrawable() == null){
+            IconForecastTask iconForecastTask = new IconForecastTask(weatherIcon);
+            iconForecastTask.execute(forecast.getIcon());
+        }
     }
 
     @Override
@@ -105,5 +126,18 @@ public class LocationActivity extends LateralMenuActivity {
         super.onPause();
         if (anim != null && anim.isRunning())
             anim.stop();
+    }
+
+    private void setupReyclerView(){
+        ArrayList<String> list = new ArrayList<>();
+        list.add("Paris");
+        list.add("Lille");
+        list.add("Lyon");
+        list.add("Nantes");
+        list.add("Marseille");
+        forecastsAdapter = new ForecastsAdapter(list);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        forecastsRecyclerView.setLayoutManager(linearLayoutManager);
+        forecastsRecyclerView.setAdapter(forecastsAdapter);
     }
 }

@@ -2,14 +2,25 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <Preference
-        android:title="Reset"
-        android:key="@string/reset"
+        android:title="@string/reset"
+        android:key="@string/resetID"
         android:summary="Delete all the saved locations"/>
 
     <CheckBoxPreference
-        android:title="Show Icon"
-        android:key="@string/showIcon"
+        android:title="@string/showIcon"
+        android:key="@string/showIconID"
         android:summary="Download and show Icon for the forecast"
         android:defaultValue="true"/>
+
+    <PreferenceCategory
+        android:title="@string/fiveForecast"
+        android:key="pref_five_days_forecast">
+        <CheckBoxPreference
+            android:title="@string/show5Forecasts"
+            android:key="@string/showForecastID"
+            android:summary="Display 5 days forecast for a location"
+            android:defaultValue="false" />
+
+    </PreferenceCategory>
 
 </PreferenceScreen>

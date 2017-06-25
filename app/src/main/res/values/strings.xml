@@ -25,8 +25,13 @@
 
     <string name="noConnexion">No internet connexion. Try again later.</string>
 
-    <string name="reset">Reset all locations</string>
+    <string name="reset">Reset</string>
+    <string name="resetID">reset</string>
     <string name="showIcon">Show icon</string>
+    <string name="showIconID">show_icon</string>
+    <string name="fiveForecast">5 days Forecat</string>
+    <string name="show5Forecasts">Show 5 days forecast</string>
+    <string name="showForecastID">show_forecast</string>
 
     <string name="forecastExtra">FORECAST_EXTRA</string>
     <string name="locationNameExtra">LOCATION_NAME_EXTRA</string>

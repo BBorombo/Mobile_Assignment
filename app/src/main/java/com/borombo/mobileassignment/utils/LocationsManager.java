@@ -37,7 +37,13 @@ public class LocationsManager {
     public boolean showIcon(Context context){
         preferences = PreferenceManager
                 .getDefaultSharedPreferences(context);
-        return preferences.getBoolean(context.getString(R.string.showIcon), true);
+        return preferences.getBoolean(context.getString(R.string.showIconID), true);
+    }
+
+    public boolean show5FDaysForecast(Context context){
+        preferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        return preferences.getBoolean(context.getString(R.string.showForecastID), true);
     }
 
     public int getNumberOfCities(Context context){

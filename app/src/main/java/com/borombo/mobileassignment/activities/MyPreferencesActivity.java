@@ -31,7 +31,7 @@ public class MyPreferencesActivity extends PreferenceActivity {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.preferences);
 
-            Preference button = findPreference(getString(R.string.reset));
+            Preference button = findPreference(getString(R.string.resetID));
             button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
