@@ -5,7 +5,11 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.View;
 
 import com.borombo.mobileassignment.R;
 import com.borombo.mobileassignment.activities.LocationActivity;
@@ -30,6 +34,7 @@ public class TodayForecastTask extends AsyncTask<String, Void, JSONObject> {
 
     private JSONObject jsonData;
     private Context context;
+    private DrawerLayout content;
     private Gson gson = new Gson();
 
     private Forecast forecast;
@@ -48,8 +53,9 @@ public class TodayForecastTask extends AsyncTask<String, Void, JSONObject> {
     private static final String LNG_URL = "&lon=";
     private static final String END_URL = "&appid=c6e381d8c7ff98f0fee43775817cf6ad&units=metric";
 
-    public TodayForecastTask(Context context){
+    public TodayForecastTask(Context context, DrawerLayout content){
         this.context = context;
+        this.content = content;
     }
 
     @Override
@@ -64,6 +70,7 @@ public class TodayForecastTask extends AsyncTask<String, Void, JSONObject> {
         builder.append(LNG_URL);
         builder.append(params[1]);
         builder.append(END_URL);
+
 
         if (hasActiveInternetConnection()){
             try {
@@ -92,31 +99,38 @@ public class TodayForecastTask extends AsyncTask<String, Void, JSONObject> {
 
     @Override
     protected void onPostExecute(JSONObject jsonObject) {
-        Log.d("Data",jsonObject.toString());
+        if (jsonObject != null){
+            try{
+                forecast = new Forecast();
+                JSONObject main = jsonObject.getJSONObject(MAIN);
+                JSONObject wind = jsonObject.getJSONObject(WIND);
 
-        try{
-            forecast = new Forecast();
-            JSONObject main = jsonObject.getJSONObject(MAIN);
-            JSONObject wind = jsonObject.getJSONObject(WIND);
+                forecast.setTemperature(main.getDouble(TEMP));
+                forecast.setMax_temp(main.getDouble(TEMP_MAX));
+                forecast.setMin_temp(main.getDouble(TEMP_MIN));
 
-            forecast.setTemperature(main.getDouble(TEMP));
-            forecast.setMax_temp(main.getDouble(TEMP_MAX));
-            forecast.setMin_temp(main.getDouble(TEMP_MIN));
+                forecast.setWind_deg(wind.getDouble(WIND_DEG));
+                forecast.setWind_spedd(wind.getDouble(WIND_SPEED));
 
-            forecast.setWind_deg(wind.getDouble(WIND_DEG));
-            forecast.setWind_spedd(wind.getDouble(WIND_SPEED));
+                forecast.setHumidity(main.getDouble(HUMIDITY));
 
-            forecast.setHumidity(main.getDouble(HUMIDITY));
+            }catch (JSONException e){
+                e.printStackTrace();
+            }
 
-        }catch (JSONException e){
-            e.printStackTrace();
+            if (forecast != null){
+                Intent intent = new Intent(context, LocationActivity.class);
+                intent.putExtra(context.getString(R.string.forecastExtra), gson.toJson(forecast));
+                context.startActivity(intent);
+            }
+        }else{
+
+            final Snackbar snackbar = Snackbar
+                    .make(content, context.getText(R.string.noConnexion), Snackbar.LENGTH_LONG)
+                    .setAction("Ok", null);
+            snackbar.show();
         }
 
-        if (forecast != null){
-            Intent intent = new Intent(context, LocationActivity.class);
-            intent.putExtra(context.getString(R.string.forecastExtra), gson.toJson(forecast));
-            context.startActivity(intent);
-        }
 
     }
 
@@ -135,7 +149,8 @@ public class TodayForecastTask extends AsyncTask<String, Void, JSONObject> {
                                 .openConnection());
                 urlc.setRequestProperty("User-Agent", "Test");
                 urlc.setRequestProperty("Connection", "close");
-                urlc.setConnectTimeout(1500);
+
+                urlc.setConnectTimeout(500);
                 urlc.connect();
                 res =  (urlc.getResponseCode() == 204 && urlc.getContentLength() == 0);
             } catch (IOException e) {
