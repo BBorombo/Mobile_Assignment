@@ -22,6 +22,7 @@ public class LocationsViewHolder extends ViewHolder {
     private TextView nameLabel;
     private ImageButton deleteButton;
     private LocationsAdapter adapter;
+    private Location location;
 
     public LocationsViewHolder(View itemView, LocationsAdapter adapter) {
         super(itemView);
@@ -39,16 +40,18 @@ public class LocationsViewHolder extends ViewHolder {
      */
     public void updateUI(final Context context, final Location location, final int position){
         nameLabel.setText(location.getName());
+        this.location = location;
 
         // Delete the location when user click on the trash icon
-        final DialogInterface.OnClickListener positiveButton = new DialogInterface.OnClickListener(){
+         final DialogInterface.OnClickListener positiveButton = new DialogInterface.OnClickListener(){
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                LocationsManager.getInstance().delete(location);
+                LocationsManager.getInstance().delete(position);
                 adapter.notifyItemRemoved(position);
                 adapter.notifyDataSetChanged();
             }
         };
+
         // Show the confirm alert
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override

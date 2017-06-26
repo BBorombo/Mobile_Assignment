@@ -117,6 +117,15 @@ public class LocationsManager {
     }
 
     /**
+     * Delete a location from the list
+     * @param position The position of the location to delete
+     */
+    public void delete(int position){
+        cities.remove(position);
+        save();
+    }
+
+    /**
      * Delete all the locations
      */
     public void deleteAll(){
