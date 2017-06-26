@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import com.borombo.mobileassignment.R;
 import com.borombo.mobileassignment.activities.LocationActivity;
 import com.borombo.mobileassignment.model.Forecast;
+import com.borombo.mobileassignment.utils.LocationsManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,6 +38,7 @@ public class FiveDaysForecastTask extends AsyncTask<String, Void, JSONObject> im
     private View content;
     private String locationName;
     private ProgressBar progressBar;
+    private String preferenceHour;
 
 
     private ArrayList<Forecast> forecasts = new ArrayList<>();
@@ -46,6 +48,7 @@ public class FiveDaysForecastTask extends AsyncTask<String, Void, JSONObject> im
         this.content = content;
         this.locationName = locationName;
         this.progressBar = progressBar;
+        preferenceHour = LocationsManager.getInstance().getForecastHour(context);
     }
 
     @Override
@@ -109,7 +112,11 @@ public class FiveDaysForecastTask extends AsyncTask<String, Void, JSONObject> im
                     String forecastDate = jsonForecast.getString(DT_TXT).split(" ")[0];
                     String forecastHour = jsonForecast.getString(DT_TXT).split(" ")[1];
                     if (position == 0){
-                        hour = forecastHour;
+                        if (preferenceHour.equals(context.getString(R.string.none)) ){
+                            hour = forecastHour;
+                        }else{
+                            hour = preferenceHour;
+                        }
                     }else{
                         if (!forecastHour.equals(hour)){
                             position++;

@@ -27,7 +27,7 @@
             android:summary="The hour (last 3 hours) for 5 days forecast"
             android:dialogTitle="@string/hourForecastTitle"
             android:entries="@array/hour_forecast"
-            android:entryValues="@array/hour_forecast"
+            android:entryValues="@array/hour_forecast_values"
             android:defaultValue="@string/none" />
 
     </PreferenceCategory>

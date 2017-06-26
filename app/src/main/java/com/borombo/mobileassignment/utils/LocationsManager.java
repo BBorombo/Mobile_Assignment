@@ -46,6 +46,12 @@ public class LocationsManager {
         return preferences.getBoolean(context.getString(R.string.showForecastID), true);
     }
 
+    public String getForecastHour(Context context){
+        preferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        return preferences.getString(context.getString(R.string.hourForecastID), "none");
+    }
+
     public int getNumberOfCities(Context context){
         getList(context);
         int res = 0;
