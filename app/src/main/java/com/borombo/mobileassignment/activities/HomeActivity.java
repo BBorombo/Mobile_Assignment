@@ -11,6 +11,9 @@ import android.view.View;
 import com.borombo.mobileassignment.adapters.LocationsAdapter;
 import com.borombo.mobileassignment.R;
 
+/**
+ * The Home Activity which show all the saved locations
+ */
 public class HomeActivity extends LateralMenuActivity {
 
     private RecyclerView citiesRecyclerView;
@@ -25,8 +28,8 @@ public class HomeActivity extends LateralMenuActivity {
         setupActivity();
         setupReyclerView();
 
+        // Setup the refresh layout
         refreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
-
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -35,6 +38,7 @@ public class HomeActivity extends LateralMenuActivity {
             }
         });
 
+        // Handle the click on the add button
         addCityButton = (FloatingActionButton) findViewById(R.id.addCityFAB);
         addCityButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,9 +53,11 @@ public class HomeActivity extends LateralMenuActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        // Update the list
         locationsAdapter.swap();
     }
 
+    // Setup the recycler view
     private void setupReyclerView(){
         citiesRecyclerView = (RecyclerView) findViewById(R.id.citiesRecyclerView);
 

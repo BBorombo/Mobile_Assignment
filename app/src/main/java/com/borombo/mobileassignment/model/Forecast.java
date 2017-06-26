@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 /**
  * Created by Borombo on 24/06/2017.
+ * Class represent Forecast datas
  */
-
 public class Forecast implements Serializable{
 
     private String weatherMain;

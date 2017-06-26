@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.borombo.mobileassignment.R;
 import com.borombo.mobileassignment.adapters.ForecastsAdapter;
-import com.borombo.mobileassignment.adapters.LocationsAdapter;
 import com.borombo.mobileassignment.model.Forecast;
 import com.borombo.mobileassignment.tasks.IconForecastTask;
 import com.borombo.mobileassignment.utils.LocationsManager;
@@ -23,6 +22,9 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ * This activity show the forecast informations for a location
+ */
 public class LocationActivity extends LateralMenuActivity {
 
     private AnimationDrawable anim;
@@ -42,7 +44,7 @@ public class LocationActivity extends LateralMenuActivity {
     private TextView minTemperature;
     private TextView windDegree;
     private TextView windSpeed;
-    private TextView humity;
+    private TextView humidity;
     private TextView rain;
     private TextView cityName;
     private TextView locationName;
@@ -58,9 +60,11 @@ public class LocationActivity extends LateralMenuActivity {
         setContentView(R.layout.activity_location);
         setupActivity();
 
+        // Get the preferences
         fiveDaysForecast = LocationsManager.getInstance().show5FDaysForecast(this);
         showIcon = LocationsManager.getInstance().showIcon(this);
 
+        // According to preferences we take the good datas from the intent
         if (fiveDaysForecast){
             forecasts = (ArrayList<Forecast>) getIntent().getSerializableExtra(getString(R.string.forecastsExtra));
             forecast = forecasts.get(0);
@@ -71,6 +75,7 @@ public class LocationActivity extends LateralMenuActivity {
 
         name = getIntent().getStringExtra(getString(R.string.locationNameExtra));
 
+        // Setup the view
         date = (TextView) findViewById(R.id.date);
         weatherMain = (TextView) findViewById(R.id.weatherMain);
         weatherDescription = (TextView) findViewById(R.id.weatherDescription);
@@ -79,7 +84,7 @@ public class LocationActivity extends LateralMenuActivity {
         minTemperature = (TextView) findViewById(R.id.minTemperature);
         windDegree = (TextView) findViewById(R.id.windDegree);
         windSpeed = (TextView) findViewById(R.id.windSpeed);
-        humity = (TextView) findViewById(R.id.humidity);
+        humidity = (TextView) findViewById(R.id.humidity);
         rain = (TextView) findViewById(R.id.rain);
         cityName = (TextView) findViewById(R.id.cityName);
         locationName = (TextView) findViewById(R.id.locationName);
@@ -88,11 +93,13 @@ public class LocationActivity extends LateralMenuActivity {
 
         forecastsRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
+        // According to preferences we download the icon or not
         if (showIcon && forecast.getIcon() != null){
             IconForecastTask iconForecastTask = new IconForecastTask(weatherIcon);
             iconForecastTask.execute(forecast.getIcon());
         }
 
+        // Set the data inside the view
         weatherMain.setText(forecast.getWeatherMain());
         weatherDescription.setText(forecast.getWeatherDescription());
 
@@ -101,16 +108,18 @@ public class LocationActivity extends LateralMenuActivity {
         minTemperature.setText( getString(R.string.minTemp, forecast.getMin_temp()) );
         windDegree.setText(getString(R.string.windDegree, forecast.getWind_deg()));
         windSpeed.setText(getString(R.string.windSpeed, forecast.getWind_spedd()));
-        humity.setText(getString(R.string.humidity, forecast.getHumidity()));
+        humidity.setText(getString(R.string.humidity, forecast.getHumidity()));
         rain.setText(getString(R.string.rain, forecast.getRain()));
 
         locationName.setText(name);
         cityName.setText(forecast.getCityName());
 
+        // Format the date
         Date currentDate = new Date();
         String stringDate =  DateFormat.getDateInstance().format(currentDate);
         date.setText(stringDate);
 
+        // Background animation
         CoordinatorLayout container = (CoordinatorLayout) findViewById(R.id.container);
         anim = (AnimationDrawable) container.getBackground();
         anim.setEnterFadeDuration(6000);
@@ -126,12 +135,15 @@ public class LocationActivity extends LateralMenuActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        // Handle the animation
         if (anim != null && !anim.isRunning())
             anim.start();
+        // Show the icon if the user comes from preferences and choose to show them
         if (LocationsManager.getInstance().showIcon(this) && weatherIcon.getDrawable() == null){
             IconForecastTask iconForecastTask = new IconForecastTask(weatherIcon);
             iconForecastTask.execute(forecast.getIcon());
-            forecastsAdapter.swap();
+            if (fiveDaysForecast)
+                forecastsAdapter.swap();
         }
 
     }
@@ -139,10 +151,12 @@ public class LocationActivity extends LateralMenuActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        // Handle the animation
         if (anim != null && anim.isRunning())
             anim.stop();
     }
 
+    // Setup the recycler view
     private void setupReyclerView(){
         forecastsAdapter = new ForecastsAdapter(forecasts);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);

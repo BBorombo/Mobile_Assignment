@@ -6,10 +6,13 @@ import android.webkit.WebView;
 
 import com.borombo.mobileassignment.R;
 
+/**
+ * Activity for the Help page that show a WebView
+ */
 public class HelpActivity extends LateralMenuActivity {
 
     private WebView webView;
-    private Bundle webViewBundle;
+    private Bundle webViewBundle = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +29,6 @@ public class HelpActivity extends LateralMenuActivity {
         }
 
         WebSettings webSettings = webView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
             webSettings.setAllowFileAccessFromFileURLs(true);

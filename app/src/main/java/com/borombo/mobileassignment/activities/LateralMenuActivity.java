@@ -1,9 +1,7 @@
 package com.borombo.mobileassignment.activities;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -16,12 +14,18 @@ import com.borombo.mobileassignment.R;
 
 /**
  * Created by Borombo on 24/06/2017.
+ *
+ * Custom activity which have a Navigation view.
+ * This class is extend from all the activity that need the navigation view.
  */
 
-public class LateralMenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public abstract class LateralMenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     protected Toolbar toolbar;
 
+    /**
+     * Setup all what is needed for that the DrawerLayout and NavigationView works fine
+     */
     protected  void setupActivity(){
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -40,7 +44,7 @@ public class LateralMenuActivity extends AppCompatActivity implements Navigation
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         Intent intent = new Intent();
-
+        // Start the right activity when user select a item on the menu list
         switch (id){
             case R.id.home:
                 intent = new Intent(LateralMenuActivity.this, HomeActivity.class);
@@ -60,6 +64,7 @@ public class LateralMenuActivity extends AppCompatActivity implements Navigation
 
     @Override
     public void onBackPressed() {
+        // Close the drawer if it's open on back pressed
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);

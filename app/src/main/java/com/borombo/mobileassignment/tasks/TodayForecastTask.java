@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -15,7 +13,6 @@ import android.widget.ProgressBar;
 import com.borombo.mobileassignment.R;
 import com.borombo.mobileassignment.activities.LocationActivity;
 import com.borombo.mobileassignment.model.Forecast;
-import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,6 +27,8 @@ import java.net.URL;
 
 /**
  * Created by Borombo on 24/06/2017.
+ *
+ * Task that get the forecast for the curent day
  */
 
 public class TodayForecastTask extends AsyncTask<String, Void, JSONObject> implements TaskValues {
@@ -58,7 +57,7 @@ public class TodayForecastTask extends AsyncTask<String, Void, JSONObject> imple
     protected JSONObject doInBackground(String... params) {
         StringBuilder stringData = new StringBuilder();
         InputStream inputStream;
-
+        // Create the url string with the parameters
         StringBuilder builder = new StringBuilder();
         builder.append(START_URL);
         builder.append(LAT_URL);
@@ -70,7 +69,7 @@ public class TodayForecastTask extends AsyncTask<String, Void, JSONObject> imple
 
         if (hasActiveInternetConnection()){
             try {
-
+                // Try to connect to the url and download the json File
                 URL url = new URL(builder.toString());
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 inputStream = connection.getInputStream();
@@ -86,13 +85,13 @@ public class TodayForecastTask extends AsyncTask<String, Void, JSONObject> imple
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            // Si il n'y a pas de connexion internet
         }
         return jsonData;
     }
 
     @Override
     protected void onPostExecute(JSONObject jsonObject) {
+        // if the result of the download is no null we take the data from the object
         if (jsonObject != null){
             try{
                 forecast = new Forecast();
@@ -125,7 +124,7 @@ public class TodayForecastTask extends AsyncTask<String, Void, JSONObject> imple
             }catch (JSONException e){
                 e.printStackTrace();
             }
-
+            // If the object is no null, we go to the Location activity
             if (forecast != null){
                 Intent intent = new Intent(context, LocationActivity.class);
                 intent.putExtra(context.getString(R.string.forecastExtra), gson.toJson(forecast));
@@ -133,7 +132,8 @@ public class TodayForecastTask extends AsyncTask<String, Void, JSONObject> imple
                 context.startActivity(intent);
             }
         }else{
-
+            // If the object is null, a problem happened with the connection, we show a snackbar for
+            // the user
             final Snackbar snackbar = Snackbar
                     .make(content, context.getText(R.string.noConnexion), Snackbar.LENGTH_LONG)
                     .setAction("Ok", new View.OnClickListener() {
@@ -148,12 +148,20 @@ public class TodayForecastTask extends AsyncTask<String, Void, JSONObject> imple
 
     }
 
+    /**
+     * Check if network is available on the device
+     * @return A boolean with the information
+     */
     public boolean isNetworkAvailable(){
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         return (networkInfo != null);
     }
 
+    /**
+     * Check if the internet connection is active
+     * @return A boolean with the information
+     */
     public boolean hasActiveInternetConnection() {
         boolean res = false;
         if (isNetworkAvailable()) {

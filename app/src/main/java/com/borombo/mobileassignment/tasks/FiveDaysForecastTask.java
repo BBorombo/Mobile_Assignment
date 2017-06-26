@@ -29,6 +29,8 @@ import java.util.ArrayList;
 
 /**
  * Created by Borombo on 25/06/2017.
+ *
+ * Task that get the forecast for the curent day
  */
 
 public class FiveDaysForecastTask extends AsyncTask<String, Void, JSONObject> implements TaskValues{
@@ -60,7 +62,7 @@ public class FiveDaysForecastTask extends AsyncTask<String, Void, JSONObject> im
     protected JSONObject doInBackground(String... params) {
         StringBuilder stringData = new StringBuilder();
         InputStream inputStream;
-
+        // Create the url string with the parameters
         StringBuilder builder = new StringBuilder();
         builder.append(START_URL_FORECAST);
         builder.append(LAT_URL);
@@ -71,7 +73,7 @@ public class FiveDaysForecastTask extends AsyncTask<String, Void, JSONObject> im
 
         if (hasActiveInternetConnection()){
             try {
-
+                // Try to connect to the url and download the json File
                 URL url = new URL(builder.toString());
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 inputStream = connection.getInputStream();
@@ -87,13 +89,13 @@ public class FiveDaysForecastTask extends AsyncTask<String, Void, JSONObject> im
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            // Si il n'y a pas de connexion internet
         }
         return jsonData;
     }
 
     @Override
     protected void onPostExecute(JSONObject jsonObject) {
+        // if the result of the download is no null we take the data from the object
         if (jsonObject != null){
             try{
                 JSONObject city = jsonObject.getJSONObject(CITY);
@@ -106,11 +108,17 @@ public class FiveDaysForecastTask extends AsyncTask<String, Void, JSONObject> im
                 Forecast forecast;
                 int position = 0;
                 String hour = null;
+                /**
+                 * For each forecast of the list, we check the hour of the forecast. If user have set
+                 * a prefered hour for this, we will use it. If not, we will use the hour of the first
+                 * forecast to have the 5 days forecast at the same hour everyday
+                 */
                 do {
                     jsonForecast = (JSONObject) list.get(position);
                     forecast = new Forecast();
                     String forecastDate = jsonForecast.getString(DT_TXT).split(" ")[0];
                     String forecastHour = jsonForecast.getString(DT_TXT).split(" ")[1];
+
                     if (position == 0){
                         if (preferenceHour.equals(context.getString(R.string.none)) ){
                             hour = forecastHour;
@@ -160,6 +168,7 @@ public class FiveDaysForecastTask extends AsyncTask<String, Void, JSONObject> im
                 e.printStackTrace();
             }
             Log.d("Size", String.valueOf(forecasts.size()));
+            // If the list have more than 1 object, we go to the Location activity
             if (forecasts.size() > 1){
                 Intent intent = new Intent(context, LocationActivity.class);
                 intent.putExtra(context.getString(R.string.forecastsExtra), forecasts);
@@ -167,6 +176,8 @@ public class FiveDaysForecastTask extends AsyncTask<String, Void, JSONObject> im
                 context.startActivity(intent);
             }
         }else{
+            // If the object is null, a problem happened with the connection, we show a snackbar for
+            // the user
             final Snackbar snackbar = Snackbar
                     .make(content, context.getText(R.string.noConnexion), Snackbar.LENGTH_LONG)
                     .setAction("Ok", new View.OnClickListener() {
@@ -178,12 +189,20 @@ public class FiveDaysForecastTask extends AsyncTask<String, Void, JSONObject> im
         progressBar.setVisibility(View.GONE);
     }
 
+    /**
+     * Check if network is available on the device
+     * @return A boolean with the information
+     */
     public boolean isNetworkAvailable(){
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         return (networkInfo != null);
     }
 
+    /**
+     * Check if the internet connection is active
+     * @return A boolean with the information
+     */
     public boolean hasActiveInternetConnection() {
         boolean res = false;
         if (isNetworkAvailable()) {

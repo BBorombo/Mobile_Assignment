@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 /**
  * Created by Borombo on 25/06/2017.
+ * RecyclerView.Adapter for the forecast list on the location page (5 days forecast)
  */
 
 public class ForecastsAdapter extends RecyclerView.Adapter<ForecastsViewHolder> {

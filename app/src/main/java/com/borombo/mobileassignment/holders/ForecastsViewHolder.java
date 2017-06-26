@@ -13,7 +13,6 @@ import com.borombo.mobileassignment.model.Forecast;
 import com.borombo.mobileassignment.tasks.IconForecastTask;
 import com.borombo.mobileassignment.utils.LocationsManager;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,7 +21,6 @@ import java.util.Locale;
 /**
  * Created by Borombo on 25/06/2017.
  */
-
 public class ForecastsViewHolder extends RecyclerView.ViewHolder {
 
     private TextView date;
@@ -54,9 +52,15 @@ public class ForecastsViewHolder extends RecyclerView.ViewHolder {
         weatherIcon = (ImageView) itemView.findViewById(R.id.weatherIcon);
     }
 
+    /**
+     * Set the data in the interface
+     * @param context The context
+     * @param forecast The forecast Object
+     */
     public void updateUI(Context context, Forecast forecast){
         this.context =  context;
         Date _date = null;
+        // Format the date
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         try {
             _date = format.parse(forecast.getDate());
@@ -76,6 +80,7 @@ public class ForecastsViewHolder extends RecyclerView.ViewHolder {
         humity.setText(context.getString(R.string.humidity, forecast.getHumidity()));
         rain.setText(context.getString(R.string.rain, forecast.getRain()));
 
+        // Check if we should show the icons
         if (LocationsManager.getInstance().showIcon(context) && forecast.getIcon() != null){
             IconForecastTask iconForecastTask = new IconForecastTask(weatherIcon);
             iconForecastTask.execute(forecast.getIcon());
@@ -83,6 +88,10 @@ public class ForecastsViewHolder extends RecyclerView.ViewHolder {
 
     }
 
+    /**
+     * Get the locale of the device
+     * @return locale
+     */
     @TargetApi(Build.VERSION_CODES.N)
     private Locale getCurrentLocale(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){

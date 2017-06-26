@@ -1,17 +1,11 @@
 package com.borombo.mobileassignment.tasks;
 
-import android.content.Context;
-import android.view.View;
-
-import com.borombo.mobileassignment.model.Forecast;
 import com.google.gson.Gson;
-
-import org.json.JSONObject;
 
 /**
  * Created by Borombo on 25/06/2017.
+ * All the values used in Task which calls the API
  */
-
 public interface TaskValues {
     Gson gson = new Gson();
 

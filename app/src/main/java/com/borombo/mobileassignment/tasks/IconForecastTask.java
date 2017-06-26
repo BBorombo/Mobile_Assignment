@@ -14,6 +14,8 @@ import java.net.URL;
 
 /**
  * Created by Borombo on 25/06/2017.
+ *
+ * Task that download and display icon from the API
  */
 
 public class IconForecastTask extends AsyncTask<String, Void, Bitmap> {
@@ -25,7 +27,6 @@ public class IconForecastTask extends AsyncTask<String, Void, Bitmap> {
     public IconForecastTask(ImageView imageView) {
         this.imageView = new WeakReference<>(imageView);
     }
-
 
     @Override
     protected Bitmap doInBackground(String... params) {

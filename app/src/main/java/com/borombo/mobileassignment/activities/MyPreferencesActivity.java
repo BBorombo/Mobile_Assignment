@@ -15,8 +15,9 @@ import com.borombo.mobileassignment.utils.LocationsManager;
 
 /**
  * Created by Borombo on 25/06/2017.
+ *
+ * Custom preferences activity
  */
-
 public class MyPreferencesActivity extends PreferenceActivity {
 
     @Override
@@ -31,6 +32,8 @@ public class MyPreferencesActivity extends PreferenceActivity {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.preferences);
 
+            // Show a popup when user click on deleteAll preference and then
+            // delete all the location if the user valid it.
             Preference button = findPreference(getString(R.string.resetID));
             button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override

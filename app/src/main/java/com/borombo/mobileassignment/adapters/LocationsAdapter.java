@@ -16,6 +16,7 @@ import com.borombo.mobileassignment.model.Location;
 
 /**
  * Created by Borombo on 24/06/2017.
+ * RecyclerView.Adapter for the location list on the home page
  */
 
 public class LocationsAdapter extends RecyclerView.Adapter<LocationsViewHolder> {
@@ -39,6 +40,7 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsViewHolder> 
         final ProgressBar progressBar = (ProgressBar) holder.itemView.findViewById(R.id.progressBar);
         holder.updateUI(context, location, position);
 
+        // Execute the correct task when user click on a item location
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

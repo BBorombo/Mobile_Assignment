@@ -18,6 +18,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+/**
+ * Activity that embed the map for select the wanted location
+ */
 public class AddLocationActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapLongClickListener {
 
     private GoogleMap map;
@@ -51,6 +54,8 @@ public class AddLocationActivity extends FragmentActivity implements OnMapReadyC
 
         final EditText input = new EditText(AddLocationActivity.this);
 
+        // When user do a long click on the map, a a marker is placed and a popup appears to ask
+        // him the name of this location. If the user cancel the popup, the marker is removed
         DialogInterface.OnClickListener positiveButton = new DialogInterface.OnClickListener(){
             @Override
             public void onClick(DialogInterface dialog, int which) {

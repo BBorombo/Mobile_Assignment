@@ -2,8 +2,8 @@ package com.borombo.mobileassignment.model;
 
 /**
  * Created by Borombo on 24/06/2017.
+ * Class represents Locations datas
  */
-
 public class Location {
 
     private String name;

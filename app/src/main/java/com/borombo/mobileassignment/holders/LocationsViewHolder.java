@@ -17,7 +17,6 @@ import com.borombo.mobileassignment.utils.LocationsManager;
 /**
  * Created by Borombo on 24/06/2017.
  */
-
 public class LocationsViewHolder extends ViewHolder {
 
     private TextView nameLabel;
@@ -32,9 +31,16 @@ public class LocationsViewHolder extends ViewHolder {
 
     }
 
+    /**
+     * Set the data in the interface
+     * @param context The context
+     * @param location The location Object
+     * @param position The position of the Location in the list
+     */
     public void updateUI(final Context context, final Location location, final int position){
         nameLabel.setText(location.getName());
 
+        // Delete the location when user click on the trash icon
         final DialogInterface.OnClickListener positiveButton = new DialogInterface.OnClickListener(){
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -43,7 +49,7 @@ public class LocationsViewHolder extends ViewHolder {
                 adapter.notifyDataSetChanged();
             }
         };
-
+        // Show the confirm alert
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
