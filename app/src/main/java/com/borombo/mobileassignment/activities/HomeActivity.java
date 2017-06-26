@@ -8,8 +8,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.borombo.mobileassignment.adapters.LocationsAdapter;
 import com.borombo.mobileassignment.R;
+import com.borombo.mobileassignment.adapters.LocationsAdapter;
 
 /**
  * The Home Activity which show all the saved locations

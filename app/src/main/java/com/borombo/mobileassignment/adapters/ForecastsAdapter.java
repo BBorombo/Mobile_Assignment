@@ -11,6 +11,7 @@ import com.borombo.mobileassignment.holders.ForecastsViewHolder;
 import com.borombo.mobileassignment.model.Forecast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Borombo on 25/06/2017.
@@ -19,10 +20,11 @@ import java.util.ArrayList;
 
 public class ForecastsAdapter extends RecyclerView.Adapter<ForecastsViewHolder> {
 
-    private ArrayList<Forecast> forecasts = new ArrayList<>();
+    private List<Forecast> forecasts = new ArrayList<>();
 
     public ForecastsAdapter(ArrayList<Forecast> list){
-        forecasts = list;
+        // Take the list without the first forecast that is displayed as the today one
+        forecasts = list.subList(1, list.size());
     }
 
     @Override

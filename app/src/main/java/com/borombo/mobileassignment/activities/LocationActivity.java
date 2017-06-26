@@ -1,5 +1,6 @@
 package com.borombo.mobileassignment.activities;
 
+import android.content.res.Configuration;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -52,6 +53,7 @@ public class LocationActivity extends LateralMenuActivity {
     private ImageView weatherIcon;
 
     private RecyclerView forecastsRecyclerView;
+    LinearLayoutManager linearLayoutManager;
     private ForecastsAdapter forecastsAdapter;
 
     @Override
@@ -68,10 +70,10 @@ public class LocationActivity extends LateralMenuActivity {
         if (fiveDaysForecast){
             forecasts = (ArrayList<Forecast>) getIntent().getSerializableExtra(getString(R.string.forecastsExtra));
             forecast = forecasts.get(0);
-            forecasts.remove(0);
         }else{
             forecast = gson.fromJson(getIntent().getStringExtra(getString(R.string.forecastExtra)), type);
         }
+
 
         name = getIntent().getStringExtra(getString(R.string.locationNameExtra));
 
@@ -135,6 +137,12 @@ public class LocationActivity extends LateralMenuActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        } else {
+            linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        }
+        forecastsRecyclerView.setLayoutManager(linearLayoutManager);
         // Handle the animation
         if (anim != null && !anim.isRunning())
             anim.start();
@@ -159,7 +167,7 @@ public class LocationActivity extends LateralMenuActivity {
     // Setup the recycler view
     private void setupReyclerView(){
         forecastsAdapter = new ForecastsAdapter(forecasts);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         forecastsRecyclerView.setLayoutManager(linearLayoutManager);
         forecastsRecyclerView.setAdapter(forecastsAdapter);
     }

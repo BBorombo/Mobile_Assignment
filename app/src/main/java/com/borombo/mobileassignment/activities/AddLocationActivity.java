@@ -2,15 +2,15 @@ package com.borombo.mobileassignment.activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.widget.EditText;
 
-import com.borombo.mobileassignment.utils.DialogManager;
-import com.borombo.mobileassignment.utils.LocationsManager;
 import com.borombo.mobileassignment.R;
 import com.borombo.mobileassignment.model.Location;
+import com.borombo.mobileassignment.utils.DialogManager;
+import com.borombo.mobileassignment.utils.LocationsManager;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;

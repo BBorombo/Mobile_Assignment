@@ -14,7 +14,9 @@ package="com.borombo.mobileassignment">
         </intent-filter>
     </activity>
     <activity android:name="com.borombo.mobileassignment.activities.HelpActivity" />
-    <activity android:name="com.borombo.mobileassignment.activities.LocationActivity" />
+    <activity
+        android:name="com.borombo.mobileassignment.activities.LocationActivity"
+        android:configChanges="orientation"/>
     <activity android:name="com.borombo.mobileassignment.activities.MyPreferencesActivity" />
     <activity
         android:noHistory="true"

@@ -7,12 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
-import com.borombo.mobileassignment.tasks.FiveDaysForecastTask;
-import com.borombo.mobileassignment.utils.LocationsManager;
 import com.borombo.mobileassignment.R;
-import com.borombo.mobileassignment.tasks.TodayForecastTask;
 import com.borombo.mobileassignment.holders.LocationsViewHolder;
 import com.borombo.mobileassignment.model.Location;
+import com.borombo.mobileassignment.tasks.FiveDaysForecastTask;
+import com.borombo.mobileassignment.tasks.TodayForecastTask;
+import com.borombo.mobileassignment.utils.LocationsManager;
 
 /**
  * Created by Borombo on 24/06/2017.
