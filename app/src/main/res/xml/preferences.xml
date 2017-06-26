@@ -21,6 +21,15 @@
             android:summary="Display 5 days forecast for a location"
             android:defaultValue="false" />
 
+        <ListPreference
+            android:key="@string/hourForecastID"
+            android:title="@string/hourForecast"
+            android:summary="The hour (last 3 hours) for 5 days forecast"
+            android:dialogTitle="@string/hourForecastTitle"
+            android:entries="@array/hour_forecast"
+            android:entryValues="@array/hour_forecast"
+            android:defaultValue="@string/none" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>

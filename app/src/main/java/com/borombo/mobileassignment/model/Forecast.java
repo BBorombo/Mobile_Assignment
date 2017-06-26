@@ -12,6 +12,7 @@ public class Forecast implements Serializable{
     private String weatherDescription;
     private String cityName;
     private String icon;
+    private String date;
 
     private Double temperature = 0.0;
     private Double max_temp = 0.0;
@@ -51,6 +52,14 @@ public class Forecast implements Serializable{
 
     public void setIcon(String icon) {
         this.icon = icon;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public Double getTemperature() {

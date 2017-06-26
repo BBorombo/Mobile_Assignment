@@ -21,6 +21,7 @@
     <string name="deleteAllLocationText">Are you sure you want to delete all the saved locations ? </string>
 
     <string name="ok">Ok</string>
+    <string name="none">None</string>
     <string name="cancel">Cancel</string>
 
     <string name="noConnexion">No internet connexion. Try again later.</string>
@@ -32,6 +33,9 @@
     <string name="fiveForecast">5 days Forecat</string>
     <string name="show5Forecasts">Show 5 days forecast</string>
     <string name="showForecastID">show_forecast</string>
+    <string name="hourForecast">Hour Forecast</string>
+    <string name="hourForecastTitle">Select the hour for the 5 day forecast</string>
+    <string name="hourForecastID">hour_forecast</string>
 
     <string name="forecastExtra">FORECAST_EXTRA</string>
     <string name="forecastsExtra">FORECASTS_EXTRA</string>

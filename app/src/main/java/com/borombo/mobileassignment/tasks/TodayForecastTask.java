@@ -10,6 +10,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.borombo.mobileassignment.R;
 import com.borombo.mobileassignment.activities.LocationActivity;
@@ -37,13 +38,20 @@ public class TodayForecastTask extends AsyncTask<String, Void, JSONObject> imple
     private Context context;
     private View content;
     private String locationName;
+    private ProgressBar progressBar;
 
     private Forecast forecast;
 
-    public TodayForecastTask(Context context, View content, String locationName){
+    public TodayForecastTask(Context context, View content, String locationName, ProgressBar progressBar){
         this.context = context;
         this.content = content;
         this.locationName = locationName;
+        this.progressBar = progressBar;
+    }
+
+    @Override
+    protected void onPreExecute() {
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -136,7 +144,7 @@ public class TodayForecastTask extends AsyncTask<String, Void, JSONObject> imple
                     });
             snackbar.show();
         }
-
+        progressBar.setVisibility(View.GONE);
 
     }
 

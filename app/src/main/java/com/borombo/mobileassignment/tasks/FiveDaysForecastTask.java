@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.borombo.mobileassignment.R;
 import com.borombo.mobileassignment.activities.LocationActivity;
@@ -35,13 +36,21 @@ public class FiveDaysForecastTask extends AsyncTask<String, Void, JSONObject> im
     private Context context;
     private View content;
     private String locationName;
+    private ProgressBar progressBar;
+
 
     private ArrayList<Forecast> forecasts = new ArrayList<>();
 
-    public FiveDaysForecastTask(Context context, View content, String locationName) {
+    public FiveDaysForecastTask(Context context, View content, String locationName, ProgressBar progressBar) {
         this.context = context;
         this.content = content;
         this.locationName = locationName;
+        this.progressBar = progressBar;
+    }
+
+    @Override
+    protected void onPreExecute() {
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -97,10 +106,12 @@ public class FiveDaysForecastTask extends AsyncTask<String, Void, JSONObject> im
                 do {
                     jsonForecast = (JSONObject) list.get(position);
                     forecast = new Forecast();
+                    String forecastDate = jsonForecast.getString(DT_TXT).split(" ")[0];
+                    String forecastHour = jsonForecast.getString(DT_TXT).split(" ")[1];
                     if (position == 0){
-                        hour = jsonForecast.getString(DT_TXT).split(" ")[1];
+                        hour = forecastHour;
                     }else{
-                        if (!jsonForecast.getString(DT_TXT).split(" ")[1].equals(hour)){
+                        if (!forecastHour.equals(hour)){
                             position++;
                             continue;
                         }
@@ -111,6 +122,7 @@ public class FiveDaysForecastTask extends AsyncTask<String, Void, JSONObject> im
                     JSONArray weatherArray = jsonForecast.getJSONArray(WEATHER);
                     JSONObject weather = (JSONObject) weatherArray.get(0);
 
+                    forecast.setDate(forecastDate);
                     forecast.setCityName(name);
                     forecast.setWeatherMain(weather.getString(MAIN));
                     forecast.setWeatherDescription(weather.getString(DESCRIPTION));
@@ -156,6 +168,7 @@ public class FiveDaysForecastTask extends AsyncTask<String, Void, JSONObject> im
                     });
             snackbar.show();
         }
+        progressBar.setVisibility(View.GONE);
     }
 
     public boolean isNetworkAvailable(){

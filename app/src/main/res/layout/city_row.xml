@@ -2,6 +2,7 @@
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:backgroundTint="@color/semiTransparent"
     android:elevation="5dp"
@@ -19,21 +20,35 @@
         <TextView
             android:id="@+id/nameLabel"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="24dp"
+            android:layout_height="0dp"
+            android:layout_marginLeft="32dp"
             android:layout_marginTop="8dp"
             android:textSize="30sp"
             android:textColor="@color/white"
             android:text="TextView"
+            android:gravity="center_vertical"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginStart="32dp"
             android:layout_marginEnd="24dp"
-            app:layout_constraintRight_toLeftOf="@+id/deleteButton"
-            android:layout_marginRight="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.333"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="8dp"
+            app:layout_constraintVertical_bias="0.535"
+            app:layout_constraintRight_toLeftOf="@+id/progressBar"
+            android:layout_marginRight="8dp" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:visibility="invisible"
+            app:layout_constraintRight_toLeftOf="@+id/deleteButton"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="8dp" />
 
         <ImageButton
             android:id="@+id/deleteButton"
