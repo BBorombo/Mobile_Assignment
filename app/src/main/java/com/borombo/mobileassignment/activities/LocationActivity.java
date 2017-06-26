@@ -137,10 +137,12 @@ public class LocationActivity extends LateralMenuActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        } else {
-            linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        if (fiveDaysForecast){
+            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+            } else {
+                linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            }
         }
         forecastsRecyclerView.setLayoutManager(linearLayoutManager);
         // Handle the animation
