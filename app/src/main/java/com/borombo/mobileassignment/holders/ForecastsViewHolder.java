@@ -5,10 +5,13 @@ import android.content.Context;
 import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.borombo.mobileassignment.R;
 import com.borombo.mobileassignment.model.Forecast;
+import com.borombo.mobileassignment.tasks.IconForecastTask;
+import com.borombo.mobileassignment.utils.LocationsManager;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -32,6 +35,7 @@ public class ForecastsViewHolder extends RecyclerView.ViewHolder {
     private TextView windSpeed;
     private TextView humity;
     private TextView rain;
+    private ImageView weatherIcon;
 
     private Context context;
 
@@ -47,6 +51,7 @@ public class ForecastsViewHolder extends RecyclerView.ViewHolder {
         windSpeed = (TextView) itemView.findViewById(R.id.windSpeed);
         humity = (TextView) itemView.findViewById(R.id.humidity);
         rain = (TextView) itemView.findViewById(R.id.rain);
+        weatherIcon = (ImageView) itemView.findViewById(R.id.weatherIcon);
     }
 
     public void updateUI(Context context, Forecast forecast){
@@ -70,6 +75,11 @@ public class ForecastsViewHolder extends RecyclerView.ViewHolder {
         windSpeed.setText(context.getString(R.string.windSpeed, forecast.getWind_spedd()));
         humity.setText(context.getString(R.string.humidity, forecast.getHumidity()));
         rain.setText(context.getString(R.string.rain, forecast.getRain()));
+
+        if (LocationsManager.getInstance().showIcon(context) && forecast.getIcon() != null){
+            IconForecastTask iconForecastTask = new IconForecastTask(weatherIcon);
+            iconForecastTask.execute(forecast.getIcon());
+        }
 
     }
 

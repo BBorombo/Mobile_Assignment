@@ -37,6 +37,10 @@ public class ForecastsAdapter extends RecyclerView.Adapter<ForecastsViewHolder> 
         holder.updateUI(context, forecast);
     }
 
+    public void swap(){
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
         return forecasts.size();

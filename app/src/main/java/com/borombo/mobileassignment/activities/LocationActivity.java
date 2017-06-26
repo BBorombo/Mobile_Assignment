@@ -131,7 +131,9 @@ public class LocationActivity extends LateralMenuActivity {
         if (LocationsManager.getInstance().showIcon(this) && weatherIcon.getDrawable() == null){
             IconForecastTask iconForecastTask = new IconForecastTask(weatherIcon);
             iconForecastTask.execute(forecast.getIcon());
+            forecastsAdapter.swap();
         }
+
     }
 
     @Override
